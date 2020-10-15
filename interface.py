@@ -1,5 +1,5 @@
 from sys import argv
-from main import get_updates
+from update import get_updates
 from manage_data import manage
 
 def update():

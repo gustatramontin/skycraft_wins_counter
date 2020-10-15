@@ -12,7 +12,7 @@
     <div class="wins">
         <?php
             $data = shell_exec("get_data.py");
-
+            # This is not workin
             echo $data;
         
         ?>

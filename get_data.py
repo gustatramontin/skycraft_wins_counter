@@ -16,6 +16,6 @@ for data in datas:
     json_var['name'].append(data[0])
     json_var['wins'].append(data[1])
 
-#print(json.dumps(json_var))
+print(json.dumps(json_var))
 
-print('test')
+#this is not workink
