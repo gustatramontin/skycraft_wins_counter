@@ -1,4 +1,6 @@
 import sqlite3
+from update import get_updates
+import numpy as np  
 
 class Database:
     def __init__(self):
@@ -20,9 +22,15 @@ class Database:
         
     def addToRank(self, names, wins):
         for name, win in zip(names, wins):
-            self.query(f"insert into rank values ('{name}', '0', '{win}')", True)
+            try:
+                self.query(f"insert into rank values ('{name}', '0', '{win}')", True)
+                print('added', name, win)
+            except sqlite3.IntegrityError:
+                print('same name', name)
 
 Sqlite = Database()
 
 if __name__ == "__main__":
-    Sqlite.query("update rank set wins=1 where username='test'", True)
+    res = np.array(Sqlite.query("select username, wins from rank"))
+
+    print(res)
