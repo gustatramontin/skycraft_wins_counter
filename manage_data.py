@@ -9,8 +9,13 @@ class Manage:
         pass
 
     def show_wins(self, limit):
-        res = self.db.query(f"select username, wins from rank limit {limit}")
-        return res
+        if limit != False:
+            res = self.db.query(f"select username, wins from rank limit {limit}")
+            return res
+        else:
+            res = self.db.query(f"select username, wins from rank")
+            return res
+
 
     def recount(self, name_wins):
         result = self.db.query("select username, skywins, wins from rank")
@@ -23,9 +28,15 @@ class Manage:
 
         for name in names:
             if name in name_wins["names"]:
-                oldSkywins = int(skywins[names.index(name)])
+
+                oldSkywins = int(str(skywins[names.index(name)]).replace(',', ''))
                 newSkywins = int(name_wins["wins"][name_wins["names"].index(name)].replace(',', ''))
-                thisWins = int(wins[name_wins["names"].index(name)])
+
+                if newSkywins < oldSkywins:
+                    continue
+
+                name_index = names.index(name)
+                thisWins = int(wins[name_index])
 
                 self.db.query(f"update rank set wins='{thisWins + (newSkywins-oldSkywins)}', skywins='{newSkywins}' where username='{name}'", True)
 
