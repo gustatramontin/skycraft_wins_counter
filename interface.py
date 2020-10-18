@@ -2,7 +2,7 @@ from sys import argv
 from update import get_updates
 from manage_data import manage
 
-def update():
+def update_datas():
     updates = get_updates()
 
     manage.recount(updates)
@@ -20,7 +20,7 @@ if __name__ == "__main__":
         question = input("Do you want to update(0), print wins(1), break(end)> ")
 
         if question == '0':
-            update()
+            update_datas()
             continue
 
         elif question == '1':
