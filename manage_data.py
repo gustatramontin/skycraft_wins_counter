@@ -10,10 +10,10 @@ class Manage:
 
     def show_wins(self, limit):
         if limit != False:
-            res = self.db.query(f"select username, wins from rank limit {limit}")
+            res = self.db.query(f"select username, wins from rank order by wins desc limit {limit}")
             return res
         else:
-            res = self.db.query(f"select username, wins from rank")
+            res = self.db.query(f"select username, wins from rank order by wins desc")
             return res
 
 
@@ -44,10 +44,7 @@ class Manage:
 manage = Manage(Sqlite)
 
 if __name__ == "__main__":    
-    manage.recount({
-        "names": ['test'],
-        "wins": [1007]
-    })
+    pass
 
 
 
