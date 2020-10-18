@@ -31,6 +31,6 @@ class Database:
 Sqlite = Database()
 
 if __name__ == "__main__":
-    res = np.array(Sqlite.query("select username, wins from rank"))
+   res = get_updates()
 
-    print(res)
+   Sqlite.addToRank(res["names"],res["wins"])
