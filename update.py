@@ -10,7 +10,7 @@ def get_updates():
             "wins": []
         }
 
-    for i in range(1, 21):
+    for i in range(1, 71):
         page = requests.get(URL.format(i))
 
         soup = BeautifulSoup(page.content, 'html.parser')
@@ -30,8 +30,6 @@ def get_updates():
     return names_and_wins
 
 if __name__ == "__main__":
-    res = get_updates()
-    for name, win in zip(res["names"], res["wins"]):
-        print(name, win)
+    pass
 
 
