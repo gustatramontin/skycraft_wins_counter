@@ -11,7 +11,7 @@
 
     <div class="wins">
         <?php
-            $data = shell_exec("get_data.py");
+            $data = system("python3 test.py");
             # This is not workin
             echo $data;
         
