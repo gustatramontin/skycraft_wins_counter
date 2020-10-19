@@ -13,7 +13,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
-PREFIX = '?'
+PREFIX = '§'
 
 client = discord.Client()
 
@@ -29,9 +29,10 @@ async def commands(ctx):
 
     comandos = f"""```
 rank <página> | mostra o rank de vitorias;
-find <nome_de_usuario> | mostras as vitórias do jogador marcado;
+find <nome_de_usuario> | mostra as vitórias do jogador marcado;
 update | atualiza o rank;
-sourcecode
+sourcecode | indisponível nesse momento;
+owner
 ```    
 """
 
@@ -74,9 +75,15 @@ async def find(ctx, name):
         await ctx.channel.send(f'{name} : {datas[0][0]}')
     except:
         await ctx.channel.send('Esse nome não existe ou foi digitado de maneira incorreta!')
-
+"""
 @bot.command()
 async def sourcecode(ctx):
     await ctx.channel.send('https://github.com/gustatramontin/skycraft_wins_counter/tree/master')
+
+"""
+
+@bot.command()
+async def owner(ctx):
+    await ctx.author.send('Os criadores são NewNeo #6326 e panther #5721.')
 
 bot.run(TOKEN)
