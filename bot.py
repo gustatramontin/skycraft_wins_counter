@@ -24,15 +24,15 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
 
 @bot.command()
-async def commands(ctx):
+async def comandos(ctx):
     embed = discord.Embed(title="Lista de Comandos", description=f"Uma lista dos Comandos disponíveis", color=0xff1a1a)
 
     comandos = f"""```
 rank <página> | mostra o rank de vitorias;
-find <nome_de_usuario> | mostra as vitórias do jogador marcado;
-update | atualiza o rank;
+achar <nome_de_usuario> | mostra as vitórias do jogador marcado;
+atualizar | atualiza o rank;
 sourcecode | indisponível nesse momento;
-owner
+criadores | mostra os criadores do bot
 ```    
 """
 
@@ -63,12 +63,12 @@ async def rank(ctx, page):
         await ctx.channel.send(str(ctx.author.mention) + ', você escreveu o parâmetro do comando de maneira incorreta.')
 
 @bot.command()
-async def update(ctx):
+async def atualizar(ctx):
     update_datas()
     await ctx.channel.send('Dados atualizados.')
 
 @bot.command()
-async def find(ctx, name):
+async def achar(ctx, name):
     datas = Sqlite.query(f"select wins from rank where username='{name}'")
 
     try:
@@ -83,7 +83,7 @@ async def sourcecode(ctx):
 """
 
 @bot.command()
-async def owner(ctx):
+async def criadores(ctx):
     await ctx.author.send('Os criadores são NewNeo #6326 e panther #5721.')
 
 bot.run(TOKEN)
