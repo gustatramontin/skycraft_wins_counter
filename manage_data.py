@@ -8,7 +8,7 @@ class Manage:
     def reset(self):
         pass
 
-    def show_wins(self, limit):
+    def show_wins(self, limit=False):
         if limit != False:
             res = self.db.query(f"select username, wins from rank order by wins desc limit {limit}")
             return res
@@ -39,6 +39,12 @@ class Manage:
                 thisWins = int(wins[name_index])
 
                 self.db.query(f"update rank set wins='{thisWins + (newSkywins-oldSkywins)}', skywins='{newSkywins}' where username='{name}'", True)
+
+    def rename(self, old_name, new_name):
+        try:
+            self.db.query(f"update rank set username='{new_name}' where username='{old_name}'", True)
+        except:
+            return False
 
 
 manage = Manage(Sqlite)
