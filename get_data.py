@@ -1,9 +1,9 @@
 from os import system
 import json
-from interface import update
+from interface import update_datas
 from manage_data import manage
 
-update()
+update_datas()
 
 datas = manage.show_wins(20)
 
