@@ -10,7 +10,7 @@ def get_updates():
             "wins": []
         }
 
-    for i in range(1, 71):
+    for i in range(1, 270):
         page = requests.get(URL.format(i))
 
         soup = BeautifulSoup(page.content, 'html.parser')
