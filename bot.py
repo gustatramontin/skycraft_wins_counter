@@ -11,6 +11,8 @@ from interface import update_datas
 
 from karma import add_member, get_karma_data, check_date, add_karma, get_karma_by_name
 
+from embed import create_embed
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
@@ -30,18 +32,20 @@ async def on_ready():
 
 @bot.command()
 async def comandos(ctx):
-    embed = discord.Embed(title="Lista de Comandos", description=f"Uma lista dos Comandos disponíveis", color=0xff1a1a)
 
-    comandos = f"""```
+
+    embed = create_embed(
+        title="Lista de Comandos", 
+        description="Uma lista dos Comandos disponíveis",
+        fild_name="Comando    Função",
+        fild_value="""```
 rank <página> | mostra o rank de vitorias;
 achar <nome_de_usuario> | mostra as vitórias do jogador marcado;
 atualizar | atualiza o rank;
 sourcecode | indisponível nesse momento;
 criadores | mostra os criadores do bot
-```    
-"""
-
-    embed.add_field(name="Comando    Função", value=comandos)
+```"""
+    )
 
     await ctx.channel.send(embed=embed)
 
@@ -88,10 +92,13 @@ async def rank(ctx, page):
         message_of_wins = ''
         for row in datas:
             message_of_wins += (f'{row[0]} | {row[1]}\n')
-
-        embed = discord.Embed(title="Vitórias dos Jogadores", description=f"Rank das vitórias página {page}", color=0xff1a1a)
-        embed.add_field(name="Nome    Vitórias", value=message_of_wins)
-        embed.set_image(url='https://skycraft.com.br/images/games/blockparty.png')
+            
+        embed = create_embed(
+            title="Vitórias dos Jogadores",
+            description=f"Rank das vitórias página {page}",
+            fild_name="Nome Vitórias",
+            fild_value=message_of_wins
+        )
 
         await ctx.channel.send(embed=embed)
     else:
@@ -168,8 +175,12 @@ async def karmatop(ctx):
     for data in raw_data:
         message += f'{data[0]} | {data[1]}\n'
 
-    embed = discord.Embed(title="Lista de Karmas", description="Nome e karma de cada usuário do servidor.", color=0xff1a1a)
-    embed.add_field(name="Nome    Karma", value=message)
+    embed = create_embed(
+        title="Lista de Karmas",
+        description="Nome e karma de cada usuário do servidor.",
+        fild_name="Nome Karma",
+        fild_value=message
+    )
 
     await ctx.channel.send(embed=embed)
 
