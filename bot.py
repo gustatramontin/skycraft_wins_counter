@@ -45,6 +45,23 @@ criadores | mostra os criadores do bot
 
     await ctx.channel.send(embed=embed)
 
+@bot.event
+async def on_message(msg):
+    if msg.author == bot.user:
+        return
+    
+    letters = list(msg.content)
+    uppercase_counter = 0
+    for letter in letters:
+        if letter.isupper():
+            uppercase_counter += 1
+        
+        if uppercase_counter >= 6:
+            await msg.delete()
+            await msg.author.send('Não utilize capslock.')
+    
+    await bot.process_commands(msg)
+
 @bot.command()
 async def rename(ctx, old_name, name):
     print(ctx.author.roles)
