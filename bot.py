@@ -77,7 +77,7 @@ async def rename(ctx, old_name, name):
 
 @bot.command()
 async def rank(ctx, page):
-    if page.isnumeric() and int(page) < 61:
+    if page.isnumeric() and int(page) < 199:
 
         page = int(page)
 
