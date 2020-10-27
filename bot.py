@@ -56,7 +56,7 @@ async def on_message(msg):
         if letter.isupper():
             uppercase_counter += 1
         
-        if uppercase_counter >= 6:
+        if uppercase_counter >= 10:
             await msg.delete()
             await msg.author.send('Não utilize capslock.')
     
