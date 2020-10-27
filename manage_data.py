@@ -43,6 +43,7 @@ class Manage:
     def rename(self, old_name, new_name):
         try:
             self.db.query(f"update rank set username='{new_name}' where username='{old_name}'", True)
+            return True
         except:
             return False
 
