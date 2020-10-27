@@ -15,6 +15,8 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
+ADM_ROLE = '🩸・Administrador(ᴀ)'
+
 PREFIX = '§'
 
 client = discord.Client()
@@ -42,6 +44,19 @@ criadores | mostra os criadores do bot
     embed.add_field(name="Comando    Função", value=comandos)
 
     await ctx.channel.send(embed=embed)
+
+@bot.command()
+async def rename(ctx, old_name, name):
+    print(ctx.author.roles)
+    if ADM_ROLE in [y.name for y in ctx.author.roles]:
+        res = manage.rename(old_name, name)
+
+        if res:
+            await ctx.channel.send(f'{old_name} foi renomeado para {name}.')
+        else:
+            await ctx.channel.send('Houve um erro na hora da renomeação!')
+    else:
+        await ctx.channel.send(f'Você precisa ter o cargo "{ADM_ROLE} " para executar esse comando') 
 
 @bot.command()
 async def rank(ctx, page):
