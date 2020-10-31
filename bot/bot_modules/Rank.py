@@ -1,6 +1,7 @@
-from db import Sqlite
+from .db import Sqlite
+from .Request import get_wins_from_skycraft
 
-class Manage:
+class Rank:
     
     def __init__(self, db):
         self.db = db
@@ -47,8 +48,15 @@ class Manage:
         except:
             return False
 
+    
+    def update(self):
+        response = get_wins_from_skycraft()
 
-manage = Manage(Sqlite)
+        self.recount(response)
+        print('updated')
+
+
+rank_tools = Rank(Sqlite)
 
 if __name__ == "__main__":    
     pass
