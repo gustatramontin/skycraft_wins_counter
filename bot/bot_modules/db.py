@@ -1,10 +1,8 @@
 import sqlite3
-from update import get_updates
-import numpy as np  
 
 class Database:
     def __init__(self):
-        self.connection = sqlite3.connect('rank.db')
+        self.connection = sqlite3.connect('../bot-db.db')
 
     def query(self, sql, commit=False):
         cursor = self.connection.cursor()
@@ -31,6 +29,4 @@ class Database:
 Sqlite = Database()
 
 if __name__ == "__main__":
-   res = get_updates()
-
-   Sqlite.addToRank(res["names"],res["wins"])
+   pass
