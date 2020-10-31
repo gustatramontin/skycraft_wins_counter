@@ -1,15 +1,12 @@
 from sys import argv
 from update import get_updates
-from manage_data import manage
+from Rank import rank
 
 def update_datas():
-    updates = get_updates()
-
-    manage.recount(updates)
-    print('updated')
+    rank.update()
 
 def create_log():
-    datas = manage.show_wins(False)
+    datas = rank.show_wins(False)
     for data in datas:
         print('User:', data[0], 'Wins:',data[1])
 
