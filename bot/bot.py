@@ -5,13 +5,19 @@ import discord
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 
-from manage_data import manage
-from db import Sqlite
-from interface import update_datas
+from bot_modules.Request import get_wins_from_skycraft
+from bot_modules.db import Sqlite
 
-from karma import add_member, get_karma_data, check_date, add_karma, get_karma_by_name
+from bot_modules.Karma import add_member, get_karma_data, check_date, add_karma, get_karma_by_name
 
-from embed import create_embed
+from bot_modules.embed import create_embed
+
+from bot_modules.Rank import rank_tools
+
+from bot_modules.chart import RankChart
+
+import nest_asyncio
+nest_asyncio.apply()
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -49,6 +55,7 @@ criadores | mostra os criadores do bot
 
     await ctx.channel.send(embed=embed)
 
+"""
 @bot.event
 async def on_message(msg):
     if msg.author == bot.user:
@@ -60,17 +67,19 @@ async def on_message(msg):
         if letter.isupper():
             uppercase_counter += 1
         
-        if uppercase_counter >= 10:
+        percentage_of_caps = (uppercase_counter / len(msg.content)) * 100
+
+        if percentage_of_caps > 60 and ADM_ROLE not in [y.name for y in msg.author.roles]:
             await msg.delete()
             await msg.author.send('Não utilize capslock.')
     
     await bot.process_commands(msg)
-
+"""
 @bot.command()
 async def rename(ctx, old_name, name):
     print(ctx.author.roles)
     if ADM_ROLE in [y.name for y in ctx.author.roles]:
-        res = manage.rename(old_name, name)
+        res = rank.rename(old_name, name)
 
         if res:
             await ctx.channel.send(f'{old_name} foi renomeado para {name}.')
@@ -85,14 +94,14 @@ async def rank(ctx, page):
 
         page = int(page)
 
-        datas = manage.show_wins(False)
+        datas = rank_tools.show_wins(False)
             
         datas = datas[(page-1)*20:page*(20)]
 
         message_of_wins = ''
         for row in datas:
             message_of_wins += (f'{row[0]} | {row[1]}\n')
-            
+
         embed = create_embed(
             title="Vitórias dos Jogadores",
             description=f"Rank das vitórias página {page}",
@@ -106,8 +115,16 @@ async def rank(ctx, page):
 
 @bot.command()
 async def atualizar(ctx):
-    update_datas()
+    rank.update()
     await ctx.channel.send('Dados atualizados.')
+    
+    for channel in ctx.guild.channels:
+        if channel.name == '📅・ɢʀᴀғɪᴄᴏ':
+            channel = channel
+            break
+
+    rank_chart = RankChart(channel)
+    await rank_chart.diplay()
 
 @bot.command()
 async def achar(ctx, name):
