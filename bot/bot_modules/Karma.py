@@ -1,4 +1,4 @@
-from db import Sqlite
+from .db import Sqlite
 from datetime import datetime
 
 def add_member(username):
