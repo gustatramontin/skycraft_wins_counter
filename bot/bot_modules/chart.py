@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from Rank import rank
+from .Rank import rank_tools
 from discord import File
 
 class RankChart:
@@ -8,7 +8,7 @@ class RankChart:
         self.channel = channel # discord channel to show the charts
 
     def get_wins(self):
-        data = rank.show_wins(10)
+        data = rank_tools.show_wins(10)
         return data
 
     async def diplay(self):
