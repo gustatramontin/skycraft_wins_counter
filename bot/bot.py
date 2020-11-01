@@ -115,7 +115,7 @@ async def rank(ctx, page):
 
 @bot.command()
 async def atualizar(ctx):
-    rank.update()
+    rank_tools.update()
     await ctx.channel.send('Dados atualizados.')
     
     for channel in ctx.guild.channels:
@@ -123,8 +123,8 @@ async def atualizar(ctx):
             channel = channel
             break
 
-    rank_chart = RankChart(channel)
-    await rank_chart.diplay()
+    #rank_chart = RankChart(channel)
+    #await rank_chart.diplay()
 
 @bot.command()
 async def achar(ctx, name):
