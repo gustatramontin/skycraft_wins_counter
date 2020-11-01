@@ -2,7 +2,7 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.connection = sqlite3.connect('../bot-db.db')
+        self.connection = sqlite3.connect('/home/gustavo/Documentos/git/sky_craft_wins_counter/bot/bot-db.db')
 
     def query(self, sql, commit=False):
         cursor = self.connection.cursor()
