@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from .Rank import rank_tools
 from discord import File
 
-class RankChart:
+class RankChart: # ITS NOT WORKIN PROPORLY
 
     def __init__(self, channel):
         self.channel = channel # discord channel to show the charts

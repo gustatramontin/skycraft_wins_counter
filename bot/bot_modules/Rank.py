@@ -6,7 +6,7 @@ class Rank:
     def __init__(self, db):
         self.db = db
 
-    def reset(self):
+    def reset(self): # it is to set wins to zero
         pass
 
     def show_wins(self, limit=False):

@@ -18,7 +18,7 @@ class Database:
         except:
             cursor.close()
         
-    def addToRank(self, names, wins):
+    def addToRank(self, names, wins): # Its not used on bot
         for name, win in zip(names, wins):
             try:
                 self.query(f"insert into rank values ('{name}', '0', '{win}')", True)

@@ -19,7 +19,7 @@ from bot_modules.chart import RankChart
 import nest_asyncio
 nest_asyncio.apply()
 
-load_dotenv()
+load_dotenv() # IN .env file set token of your discord bot
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
@@ -55,8 +55,9 @@ criadores | mostra os criadores do bot
 
     await ctx.channel.send(embed=embed)
 
+# This is to delete messages that uses much capslock 
 """
-@bot.event
+@bot.event 
 async def on_message(msg):
     if msg.author == bot.user:
         return
@@ -122,7 +123,7 @@ async def atualizar(ctx):
         if channel.name == '📅・ɢʀᴀғɪᴄᴏ':
             channel = channel
             break
-
+    # CHART IS NOT WORKING PROPORLY
     #rank_chart = RankChart(channel)
     #await rank_chart.diplay()
 
@@ -213,7 +214,8 @@ async def karmaver(ctx, name):
     
 
 @bot.command()
-async def karmamembersadd(ctx):
+async def karmamembersadd(ctx): # THIS IS TO ADD MEMBERS WHEN SOMEONE ENTERS ON THE SERVER
+                                # MAKE ITS AUTOMATCLY, USE THE on_member_add EVENT
     members = ctx.guild.members
 
     for member in members:
