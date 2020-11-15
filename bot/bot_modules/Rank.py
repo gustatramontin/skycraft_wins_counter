@@ -41,7 +41,6 @@ class Rank:
                 thisWins = int(wins[name_index])
                 sql += f"update rank set wins='{thisWins + (newSkywins-oldSkywins)}', skywins='{newSkywins}' where username='{name}';"
 
-                #self.db.query(f"update rank set wins='{thisWins + (newSkywins-oldSkywins)}', skywins='{newSkywins}' where username='{name}'", True)
         
         self.db.queryScript(sql, True)
     def rename(self, old_name, new_name):
