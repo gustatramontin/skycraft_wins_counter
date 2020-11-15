@@ -18,7 +18,8 @@ def get_wins_from_skycraft():
 
     names_and_wins = {
             "names": [],
-            "wins": []
+            "wins": [],
+            "img": []
         }
         
     async def request_site(i, session):
@@ -34,6 +35,7 @@ def get_wins_from_skycraft():
         for name in usernames:
             try:
                 names_and_wins["names"].append(name.findChildren('p', recursive=False)[0].text)
+                names_and_wins["img"].append("https://skycraft.com.br/"+name.findChildren('img', recursive=False)[0]['src'])
             except:
                 True
 
@@ -52,5 +54,5 @@ def get_wins_from_skycraft():
     return names_and_wins
 
 if __name__ == "__main__":
-    pass
+    print(get_wins_from_skycraft()['img'])
 

@@ -15,6 +15,7 @@ from bot_modules.embed import create_embed
 from bot_modules.Rank import rank_tools
 
 from bot_modules.chart import RankChart
+from bot_modules.htmltoimage import create_rank_image
 
 import nest_asyncio
 nest_asyncio.apply()
@@ -96,7 +97,14 @@ async def rank(ctx, page):
         page = int(page)
 
         datas = rank_tools.show_wins(False)
-            
+        try: # The lib that i use to create the image throw a error, but for some reason its create the image
+            # then a use the try statament to ignore the error
+            create_rank_image(datas, page)
+        except:
+            print('Image Excepted')
+        
+        #This the old method to show the ranbk
+        """   
         datas = datas[(page-1)*20:page*(20)]
 
         message_of_wins = ''
@@ -109,8 +117,8 @@ async def rank(ctx, page):
             fild_name="Nome Vitórias",
             fild_value=message_of_wins
         )
-
-        await ctx.channel.send(embed=embed)
+    """
+        await ctx.channel.send(file=discord.File('bot/rank.jpg'))
     else:
         await ctx.channel.send(str(ctx.author.mention) + ', você escreveu o parâmetro do comando de maneira incorreta.')
 

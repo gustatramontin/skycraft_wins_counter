@@ -11,10 +11,10 @@ class Rank:
 
     def show_wins(self, limit=False):
         if limit != False:
-            res = self.db.query(f"select username, wins from rank order by wins desc limit {limit}")
+            res = self.db.query(f"select username, wins, img from rank order by wins desc limit {limit}")
             return res
         else:
-            res = self.db.query(f"select username, wins from rank order by wins desc")
+            res = self.db.query(f"select username, wins, img from rank order by wins desc")
             return res
 
 
@@ -32,7 +32,6 @@ class Rank:
 
                 oldSkywins = int(str(skywins[names.index(name)]).replace(',', ''))
                 newSkywins = int(name_wins["wins"][name_wins["names"].index(name)].replace(',', ''))
-
                 if newSkywins < oldSkywins:
                     continue
 
@@ -60,6 +59,3 @@ rank_tools = Rank(Sqlite)
 
 if __name__ == "__main__":    
     pass
-
-
-
