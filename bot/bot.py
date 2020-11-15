@@ -5,17 +5,15 @@ import discord
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 
-from bot_modules.Request import get_wins_from_skycraft
 from bot_modules.db import Sqlite
 
 from bot_modules.Karma import add_member, get_karma_data, check_date, add_karma, get_karma_by_name
 
 from bot_modules.embed import create_embed
 
-from bot_modules.Rank import rank_tools
+from bot_modules.Rank import rank_tools, rank_commands
 
 from bot_modules.chart import RankChart
-from bot_modules.htmltoimage import create_rank_image
 
 import nest_asyncio
 nest_asyncio.apply()
@@ -92,57 +90,15 @@ async def rename(ctx, old_name, name):
 
 @bot.command()
 async def rank(ctx, page):
-    if page.isnumeric() and int(page) < 199:
-
-        page = int(page)
-
-        datas = rank_tools.show_wins(False)
-        try: # The lib that i use to create the image throw a error, but for some reason its create the image
-            # then a use the try statament to ignore the error
-            create_rank_image(datas, page)
-        except:
-            print('Image Excepted')
-        
-        #This the old method to show the ranbk
-        """   
-        datas = datas[(page-1)*20:page*(20)]
-
-        message_of_wins = ''
-        for row in datas:
-            message_of_wins += (f'{row[0]} | {row[1]}\n')
-
-        embed = create_embed(
-            title="Vitórias dos Jogadores",
-            description=f"Rank das vitórias página {page}",
-            fild_name="Nome Vitórias",
-            fild_value=message_of_wins
-        )
-    """
-        await ctx.channel.send(file=discord.File('bot/rank.jpg'))
-    else:
-        await ctx.channel.send(str(ctx.author.mention) + ', você escreveu o parâmetro do comando de maneira incorreta.')
+    await rank_commands.rank(ctx, page)
 
 @bot.command()
 async def atualizar(ctx):
-    rank_tools.update()
-    await ctx.channel.send('Dados atualizados.')
-    
-    for channel in ctx.guild.channels:
-        if channel.name == '📅・ɢʀᴀғɪᴄᴏ':
-            channel = channel
-            break
-    # CHART IS NOT WORKING PROPORLY
-    #rank_chart = RankChart(channel)
-    #await rank_chart.diplay()
+    await rank_commands.atualizar(ctx)
 
 @bot.command()
 async def achar(ctx, name):
-    datas = Sqlite.query(f"select wins from rank where username='{name}'")
-
-    try:
-        await ctx.channel.send(f'{name} : {datas[0][0]}')
-    except:
-        await ctx.channel.send('Esse nome não existe ou foi digitado de maneira incorreta!')
+    await rank_commands.achar(ctx, name)
 """
 @bot.command()
 async def sourcecode(ctx):
