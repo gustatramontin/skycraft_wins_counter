@@ -17,6 +17,20 @@ class Database:
             return rows
         except:
             cursor.close()
+
+    def queryScript(self, sql, commit=False):
+        cursor = self.connection.cursor()
+        cursor.executescript(sql)
+
+        if commit == True:
+            self.connection.commit()
+
+        try:
+            rows = cursor.fetchall()
+            cursor.close()
+            return rows
+        except:
+            cursor.close()
         
     def addToRank(self, names, wins): # Its not used on bot
         for name, win in zip(names, wins):

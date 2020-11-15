@@ -26,7 +26,7 @@ class Rank:
         skywins = list(map(lambda a: a[1], result))
 
         wins = list(map(lambda a: a[2], result))
-
+        sql = ""
         for name in names:
             if name in name_wins["names"]:
 
@@ -37,9 +37,11 @@ class Rank:
 
                 name_index = names.index(name)
                 thisWins = int(wins[name_index])
+                sql += f"update rank set wins='{thisWins + (newSkywins-oldSkywins)}', skywins='{newSkywins}' where username='{name}';"
 
-                self.db.query(f"update rank set wins='{thisWins + (newSkywins-oldSkywins)}', skywins='{newSkywins}' where username='{name}'", True)
-
+                #self.db.query(f"update rank set wins='{thisWins + (newSkywins-oldSkywins)}', skywins='{newSkywins}' where username='{name}'", True)
+        
+        self.db.queryScript(sql, True)
     def rename(self, old_name, new_name):
         try:
             self.db.query(f"update rank set username='{new_name}' where username='{old_name}'", True)
