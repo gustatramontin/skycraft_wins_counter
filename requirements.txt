@@ -1,0 +1,9 @@
+discord
+dotenv
+nest_asyncio
+requests
+bs4
+asyncio
+aiohttp
+imgkit
+matplotlib
