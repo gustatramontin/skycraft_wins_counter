@@ -4,6 +4,7 @@ import re
 import discord
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
+from discord import Embed
 
 from bot_modules.db import Sqlite
 
@@ -11,7 +12,7 @@ from bot_modules.Karma import add_member, get_karma_data, check_date, add_karma,
 
 from bot_modules.embed import create_embed
 
-from bot_modules.Rank import rank_tools, rank_commands
+from bot_modules.Rank import rank_tools, rank_commands, server_tools
 
 from bot_modules.chart import RankChart
 
@@ -24,7 +25,7 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 ADM_ROLE = '🩸・Administrador(ᴀ)'
 
-PREFIX = '§'
+PREFIX = '*'
 
 client = discord.Client()
 intents = discord.Intents(messages=True, guilds=True, members=True)
@@ -76,21 +77,43 @@ async def on_message(msg):
     await bot.process_commands(msg)
 """
 @bot.command()
-async def rename(ctx, old_name, name):
-    print(ctx.author.roles)
-    if ADM_ROLE in [y.name for y in ctx.author.roles]:
-        res = rank.rename(old_name, name)
+async def rename(ctx, new_name):
+    renomeado = await rank_commands.rename(ctx, new_name) 
 
-        if res:
-            await ctx.channel.send(f'{old_name} foi renomeado para {name}.')
-        else:
-            await ctx.channel.send('Houve um erro na hora da renomeação!')
-    else:
-        await ctx.channel.send(f'Você precisa ter o cargo "{ADM_ROLE} " para executar esse comando') 
-
+    if renomeado:
+        await ctx.channel.send('Renomeado!')
 @bot.command()
 async def rank(ctx, page):
     await rank_commands.rank(ctx, page)
+
+@bot.command()
+async def perfil(ctx, name):
+    pass
+
+@bot.command()
+async def register(ctx, nick=' ', mine_type=' ', vip= ''):
+    await server_tools.register(ctx, nick, mine_type, vip)
+
+@bot.command()
+async def conta(ctx):
+    conta_info = await server_tools.account(ctx)
+
+    if conta_info == False:
+        await ctx.channel.send('Você precisa registrar-se!')
+        return
+    await ctx.channel.send(embed = discord.Embed.from_dict({
+        "title": f'👤 Dados da Conta de {ctx.author.name}',
+        "thumbnail": {
+            "url": conta_info[0][5],
+            "width": 50,
+            "height": 50
+        },
+        "color": 0x50c878,
+        "fields": [{
+            "name": "\n- - - - - - - - - - - - - - - - - - - - - - - -\n",
+            "value": f"**📋 Nick do Minecraft:** {conta_info[0][0]}\n\n**⛏️ Minecraft:** {conta_info[0][1]}\n\n**🌟 Vip:** {conta_info[0][3]}\n\n**🏆 Vitórias Totais:** {conta_info[0][4]}\n\n**🏆 Vitórias Mensais**: {conta_info[0][6]}\n\n**📅 Data de registro:** {conta_info[0][2]}"
+        }]
+    }))
 
 @bot.command()
 async def atualizar(ctx):

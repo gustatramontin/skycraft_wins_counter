@@ -10,7 +10,7 @@ import nest_asyncio
 nest_asyncio.apply()
 
 
-def get_wins_from_skycraft():
+def get_wins_from_skycraft(time):
 
     loop = asyncio.get_event_loop()
 
@@ -48,11 +48,16 @@ def get_wins_from_skycraft():
         async with ClientSession() as session:
             await request_site(i, session)
 
-        
-    loop.run_until_complete(asyncio.gather(*[main(i) for i in range(1,270)]))
+    if time==1:
+        loop.run_until_complete(asyncio.gather(*[main(i) for i in range(1,390)]))
+    elif time==2:
+        loop.run_until_complete(asyncio.gather(*[main(i) for i in range(390,780)]))
+    else:
+        loop.run_until_complete(asyncio.gather(*[main(i) for i in range(780,1172)]))
+
+
 
     return names_and_wins
 
 if __name__ == "__main__":
-    print(get_wins_from_skycraft()['img'])
-
+    pass

@@ -12,7 +12,7 @@ def create_rank_image(rank, page):
 
     for row in new_rank:
         name = row[0]
-        wins = row[1]
+        wins = row[3]
         img_path = row[2]
         
         if i == 1:
@@ -100,8 +100,8 @@ def create_rank_image(rank, page):
     """
 
     
-    config = imgkit.config(wkhtmltoimage='/usr/bin/wkhtmltoimage')
-    imgkit.from_string(html, 'bot/rank.jpg', config=config)
+    config = imgkit.config(wkhtmltoimage='/usr/local/bin/wkhtmltoimage')
+    imgkit.from_string(html, 'rank.jpg', config=config)
 
 if __name__ == "__main__":
     pass
