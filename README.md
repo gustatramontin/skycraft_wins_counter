@@ -1,6 +1,3 @@
-# Novo Contador de Wins para o Skycraft
-Um contador das wins para o Skycraft.
-O contador do site original parou de resetar as wins mensais então criei um que faça isso. 
-Por enquanto ele só analisa a parte do block party.
+# Bot Topone
 
-# Atualmente Parado
+Bot do discord que faz primariamente um rank de vitorias dos membros num minigame chamado blockparty de um servidor de minecraft chamado skycraftt
